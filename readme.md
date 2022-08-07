@@ -1,11 +1,6 @@
-# AddressToCountry
-Simple Python routine to validate country code of given addresses utilising the Google Geocoding API
+# Angel
+Simple Python routine read data from a specified spreadsheet tab, and create a HTML/CSS visual representation 
 
-Input:     address_list.csv
+TAB format is a bit bespoke... ;-)
 
-    Format: <address string> , <expected country code>
-
-Processing: 
-    Calls the Google GeoCode API with <address string> 
-    Compares returned country code, with the expected code.
-
+but then creates the HTML to render each investment in a grid of cells.... 

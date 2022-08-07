@@ -2,28 +2,26 @@ import pandas as pd
 import datetime
 import shutil
 
-# DEPENDENCIES - reading excel needs:
-# pip install xlrd
-# pip install openpyxl
-# pip install --upgrade pandas
-
-
+# Input spreadsheet and tab name
 xl_file = r"C:\Users\shaun\OneDrive\Documents\Personal\Lucy-Flat-Income (NEW).xlsx"
 xl_sheet = r"CrowdCube"
 
+# Output HTML
 html_file = r"C:\Users\shaun\OneDrive\Documents\My Web Sites\WebSite1\Investments-AUTO.html"
 
+# Copy the latest Style Sheet as well to output
 print("Copying master CSS Style Sheet to webpage directory")
 dest_css_file = r"C:\Users\shaun\OneDrive\Documents\My Web Sites\WebSite1\Investments-AUTO.css"
 src_css_file = r"Investments-AUTO.css"
 shutil.copyfile(src_css_file, dest_css_file)
 
+# Now load the relevant tab from the spreadsheet
 print("Loading data spreadsheet:", xl_file )
 df = pd.read_excel(xl_file, sheet_name=xl_sheet, header=0)
 
 time_now = datetime.datetime.now()
 print('\nStarting: Angel Investment webpage generation @ ' + time_now.strftime("%H:%M:%S") + '\n')
-# Need to set encoding for the £ sign inclusion
+# HTML HEADER SECTION : Need to set encoding for the £ sign inclusion
 out_file = open(html_file, "w", encoding='utf-8')
 out_file.write('<!DOCTYPE html>\n')
 out_file.write('<html>\n')
@@ -43,7 +41,7 @@ out_file.write('    <div class="outer-grid" >\n')
 out_file.write('\n')
 out_file.write('    <!-- REPEATED CODE FOR EACH INVESTMENT  -->\n')
 
-# DO STUFF HERE
+# HTML REPEATED SECTION for each INVESTMENT
 total_value = 0
 total_outcome = 0
 total_count = 0
@@ -105,6 +103,7 @@ for index, row in df.iterrows():
     out_file.write('            <div class="inner-grid-amount">' + r_invest_value + '</div>\n')
     out_file.write('        </div>  <!-- end of inner-grid items -->\n')
 
+# HTML FOOTER SECTION
 out_file.write('\n')
 out_file.write('    </div>   <!-- end of outer-grid items -->\n')
 out_file.write('\n')
