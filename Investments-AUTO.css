@@ -84,27 +84,31 @@ body {
 
 .inner-grid-platform {
     grid-area: 1 / 1;
-    justify-content: left;
     overflow: hidden;
     display: flex;
+    justify-content: left;
+    align-items: center;
     object-fit: cover;
     padding: 0px;
 }
-    .inner-grid-platform a img {
-        object-fit: cover;
-        max-width: auto;
+    .inner-grid-platform img {
+        object-fit: contain;
+        vertical-align: middle;
+        max-width: 100%;
         max-height: 100%;
-        /* border-color: aqua;
-        border-style: solid;
-        border-width: 1px; */
-    }
+        /* border: 1px solid aqua; */
+       }
 
 .inner-grid-holder {
     grid-area: 1 / 2;
     font-size: 20px;
-    text-align: right;
     text-size-adjust: auto;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    /* border: 1px solid green; */
 }
+
 .inner-grid-investment {
     grid-area: 2 / 1 / span 1 / span 2;
     overflow: hidden;
