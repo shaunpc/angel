@@ -54,6 +54,7 @@ for index, row in df.iterrows():
     r_platform = row['Platform']
     r_platform_website = row['Platform Website']
     r_platform_image = row['Platform Image']
+    r_background = row['Background']
     r_company = row['Company']
     r_company_website = row['Company Website']
     r_company_image = row['Company Image']
@@ -89,14 +90,14 @@ for index, row in df.iterrows():
     out_file.write('            <div class="inner-grid-platform">\n')
     if not(pd.isna(r_platform_website)):
         out_file.write('                <a href="' + r_platform_website + '" target="_blank" rel="noopener noreferrer">\n')
-    out_file.write('                    <img src="'+ r_platform_image + '" title="' + r_platform + '">\n')
+    out_file.write('                    <img src="' + r_platform_image + '" title="' + r_platform + '">\n')
     if not(pd.isna(r_platform_website)):
         out_file.write('                </a>\n')
     out_file.write('            </div>\n')
     out_file.write('            <div class="inner-grid-holder">' + r_holder + '</div>\n')
     out_file.write('            <div class="inner-grid-investment">\n')
     out_file.write('                <a href="' + r_company_website + '" target="_blank" rel="noopener noreferrer">\n')
-    out_file.write('                    <img src="' + r_company_image + '" title="' + r_company + '">\n')
+    out_file.write('                    <img style="background:' + r_background + ';" src="' + r_company_image + '" title="' + r_company + '">\n')
     out_file.write('                </a>\n')
     out_file.write('            </div>\n')
     out_file.write('            <div class="inner-grid-since">' + r_invest_date + '</div>\n')
