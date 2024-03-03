@@ -39,7 +39,7 @@ body {
 .inner-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 3vh minmax(200px, 15vh) 2vh;
+    grid-template-rows: 3vh minmax(200px, 10vh) 2vh;
     justify-content: center;
     border-color: blue;
     border-style: solid;
@@ -51,7 +51,7 @@ body {
 .inner-grid-defunct {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 3vh minmax(200px, 15vh) 2vh;
+    grid-template-rows: 3vh minmax(200px, 10vh) 2vh;
     justify-content: center;
     border-color: blue;
     border-style: solid;
@@ -63,7 +63,7 @@ body {
 .inner-grid-cancelled {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 3vh minmax(200px, 15vh) 2vh;
+    grid-template-rows: 3vh minmax(200px, 10vh) 2vh;
     justify-content: center;
     border-color: blue;
     border-style: solid;
@@ -76,7 +76,7 @@ body {
 .inner-grid-exited {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 3vh minmax(200px, 15vh) 2vh;
+    grid-template-rows: 3vh minmax(200px, 10vh) 2vh;
     justify-content: center;
     border-color: blue;
     border-style: solid;
