@@ -1,9 +1,10 @@
 import pandas as pd
 import datetime
 import shutil
+import os
 
 # Input spreadsheet and tab name
-xl_file = r"C:\Users\shaun\OneDrive\Documents\Personal\Lucy-Flat-Income (NEW).xlsx"
+xl_file = r"C:\Users\shaun\Documents\Financial\Investment Tracking.xlsx"
 xl_sheet = r"CrowdCube"
 
 # Output HTML
@@ -59,6 +60,7 @@ for index, row in df.iterrows():
     r_company_website = row['Company Website']
     r_company_image = row['Company Image']
     r_holder = row['Who']
+    r_vehicle = row['Vehicle']
     r_invest_date_raw = row['Invest Date']
     r_invest_outcome = row['Outcome']
     r_invest_outcome_date = row['Outcome Date']
@@ -66,8 +68,10 @@ for index, row in df.iterrows():
     if pd.isnull(r_invest_date_raw):
         r_invest_date = "Status: " + r_status
     else:
-        r_invest_date = r_status + ": " + row['Invest Date'].to_pydatetime().strftime("%B %Y")
-    r_invest_value = "Value: £" + "{0:,.2f}".format(row['Value'])
+        # Date is present, used 'b' to get short-month form ('B' was for long-month form)
+        r_invest_date = r_status + ": " + row['Invest Date'].to_pydatetime().strftime("%b %Y")
+    # Don't bother displaying decimal points for investment value (changed .2f to .0f)
+    r_invest_value = "Value: £" + "{0:,.0f}".format(row['Value'])
     total_value += row['Value']
 
     if pd.isna(r_invest_outcome):
@@ -83,6 +87,8 @@ for index, row in df.iterrows():
             out_file.write('        <div class="inner-grid-defunct"> <!-- ' + r_company + ' -->\n')
         case 'CANCELLED':
             out_file.write('        <div class="inner-grid-cancelled"> <!-- ' + r_company + ' -->\n')
+        case 'DISBURSED':
+            out_file.write('        <div class="inner-grid-cancelled"> <!-- ' + r_company + ' -->\n')
         case 'EXITED':
             out_file.write('        <div class="inner-grid-exited"> <!-- ' + r_company + ' -->\n')
         case _:
@@ -97,7 +103,11 @@ for index, row in df.iterrows():
     out_file.write('            <div class="inner-grid-holder">' + r_holder + '</div>\n')
     out_file.write('            <div class="inner-grid-investment">\n')
     out_file.write('                <a href="' + r_company_website + '" target="_blank" rel="noopener noreferrer">\n')
-    out_file.write('                    <img style="background:' + r_background + ';" src="' + r_company_image + '" title="' + r_company + '">\n')
+    out_file.write('                    <img style="background:' + r_background + ';" src="' + r_company_image)
+    if pd.isnull(r_vehicle):
+        out_file.write('" title="' + r_company + '" width="100%">\n')
+    else:
+        out_file.write('" title="' + r_vehicle + '/' + r_company + '" width="100%">\n')
     out_file.write('                </a>\n')
     out_file.write('            </div>\n')
     out_file.write('            <div class="inner-grid-since">' + r_invest_date + '</div>\n')
@@ -108,7 +118,8 @@ for index, row in df.iterrows():
 out_file.write('\n')
 out_file.write('    </div>   <!-- end of outer-grid items -->\n')
 out_file.write('\n')
-summary_value_line = "{0:,.2f}".format(total_value) + ' Invested, £' + "{0:,.2f}".format(total_outcome) + ' Returned'
+# Don't bother displaying decimal points for investment value (changed .2f to .0f)
+summary_value_line = "{0:,.0f}".format(total_value) + ' Invested, £' + "{0:,.0f}".format(total_outcome) + ' Returned'
 out_file.write('    <div><h1>' + str(total_count) + ' Investments : £' + summary_value_line+ '</h1></div>\n')
 out_file.write('\n')
 out_file.write('</div>   <!-- end of page-grid items -->\n')
@@ -117,3 +128,11 @@ out_file.write('</html>\n')
 out_file.close()
 
 print('\nCompleted: ' + str(total_count) + ' Investments - Total Value: £' + "{0:,.2f}".format(total_value) + '\n')
+
+print('>> Copying latest HTML/CSS to MyCloud Public WEB directory')
+web_dir = "\\\\192.168.0.2\\Public\\WEB"
+web_html = os.path.join(web_dir, os.path.basename(html_file))
+web_css  = os.path.join(web_dir, os.path.basename(dest_css_file))
+shutil.copy(html_file, web_html)
+shutil.copy(dest_css_file, web_css)
+
